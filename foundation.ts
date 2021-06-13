@@ -1,9 +1,24 @@
-import { Card, Color, Deck, Rank, Suit, Updown } from "./card.ts";
+import {
+  Card,
+  Color,
+  Deck,
+  makeCloneCards,
+  Rank,
+  Suit,
+  Updown,
+} from "./card.ts";
 
 export class Foundation {
   cards: Card[];
+
   constructor(public suit: Suit) {
     this.cards = [];
+  }
+
+  clone() {
+    const cloneFoundation = new Foundation(this.suit);
+    cloneFoundation.cards = makeCloneCards(this.cards);
+    return cloneFoundation;
   }
 }
 

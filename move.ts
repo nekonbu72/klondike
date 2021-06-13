@@ -5,7 +5,6 @@ import { Stock } from "./stock.ts";
 
 export class Move {
   constructor(
-    public id: number,
     public piles: Pile[],
     public stock: Stock,
     public foundations: Foundation[],

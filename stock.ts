@@ -1,4 +1,12 @@
-import { Card, Color, Deck, Rank, Suit, Updown } from "./card.ts";
+import {
+  Card,
+  Color,
+  Deck,
+  makeCloneCards,
+  Rank,
+  Suit,
+  Updown,
+} from "./card.ts";
 
 export class Stock {
   static readonly MAXNUMBEROFCARDS = 52 - 1 - 2 - 3 - 4 - 5 - 6 - 7;
@@ -6,11 +14,11 @@ export class Stock {
   cards: Card[];
   position: number;
 
-  constructor(deck: Deck) {
-    if (deck.cards.length > Stock.MAXNUMBEROFCARDS) {
+  constructor(cards: Card[]) {
+    if (cards.length > Stock.MAXNUMBEROFCARDS) {
       throw new Error("Too Many Cards in Stock");
     }
-    this.cards = deck.cards;
+    this.cards = cards;
     this.downturnAll();
     this.position = Stock.MAXNUMBEROFCARDS + 1;
   }
@@ -29,5 +37,11 @@ export class Stock {
     this.cards.forEach((card) => {
       card.updown = Updown.Down;
     });
+  }
+
+  clone() {
+    const cloneStock = new Stock(makeCloneCards(this.cards));
+    cloneStock.position = this.position;
+    return cloneStock;
   }
 }

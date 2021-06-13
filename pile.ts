@@ -1,4 +1,12 @@
-import { Card, Color, Deck, Rank, Suit, Updown } from "./card.ts";
+import {
+  Card,
+  Color,
+  Deck,
+  makeCloneCards,
+  Rank,
+  Suit,
+  Updown,
+} from "./card.ts";
 
 export class Pile {
   cards: Card[];
@@ -17,6 +25,10 @@ export class Pile {
         card.updown = Updown.Down;
       }
     });
+  }
+
+  clone() {
+    return new Pile(makeCloneCards(this.cards), this.position);
   }
 }
 

@@ -48,6 +48,14 @@ export class Card {
   }
 }
 
+export function makeCloneCards(cards: Card[]) {
+  const cloneCards: Card[] = [];
+  for (const card of cards) {
+    cloneCards.push(card.clone());
+  }
+  return cloneCards;
+}
+
 export class Deck {
   cards: Card[];
 
