@@ -48,13 +48,6 @@ export class Card {
   }
 }
 
-interface CardSet {
-  cards: Card[];
-
-  clone():
-
-}
-
 export class Deck {
   cards: Card[];
 
