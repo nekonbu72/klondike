@@ -36,58 +36,58 @@ export const Updown = {
 export type Updown = typeof Updown[keyof typeof Updown];
 
 export class Card {
+  color: Color;
+
   constructor(
-    public color: Color,
     public suit: Suit,
     public rank: Rank,
     public updown: Updown,
-  ) {}
-
-  clone() {
-    return new Card(this.color, this.suit, this.rank, this.updown);
+  ) {
+    this.color = Card.suitToColor(this.suit);
   }
-}
 
-export function makeCloneCards(cards: Card[]) {
-  const cloneCards: Card[] = [];
-  for (const card of cards) {
-    cloneCards.push(card.clone());
+  private clone() {
+    return new Card(this.suit, this.rank, this.updown);
   }
-  return cloneCards;
-}
 
-export class Deck {
-  cards: Card[];
+  static cloneCards(cards: Card[]) {
+    const cloneCards: Card[] = [];
+    for (const card of cards) {
+      cloneCards.push(card.clone());
+    }
+    return cloneCards;
+  }
 
-  constructor() {
-    this.cards = [];
-    for (const rank of Object.values(Rank)) {
-      for (const suit of Object.values(Suit)) {
-        let card: Card;
-        switch (suit) {
-          case Suit.Diamond:
-          case Suit.Heart:
-            card = new Card(Color.Red, suit, rank, Updown.Down);
-            break;
-          default:
-            card = new Card(Color.Black, suit, rank, Updown.Down);
-        }
-        this.cards.push(card);
+  static suitToColor(suit: Suit) {
+    switch (suit) {
+      case Suit.Diamond:
+      case Suit.Heart:
+        return Color.Red;
+      default:
+        return Color.Black;
+    }
+  }
+
+  static stringToCard(cardInfo: string) {
+    const suitStr = cardInfo.replace(/[0-9]/g, "");
+    const rankStr = cardInfo.replace(/[^0-9]/g, "");
+    let selectedSuit: Suit = Suit.Diamond;
+    for (const suit of Object.values(Suit)) {
+      if (suitStr == suit.slice(0, suitStr.length)) {
+        selectedSuit = suit;
+        break;
       }
     }
-    this.shuffle();
-  }
-
-  shuffle() {
-    for (let i = this.cards.length - 1; i >= 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+    let selectedRank: Rank = Rank.Ace;
+    for (const rank of Object.values(Rank)) {
+      if (rankStr == rank.toString()) {
+        selectedRank = rank;
+        break;
+      }
     }
-    return this.cards;
+    return new Card(selectedSuit, selectedRank, Updown.Up);
   }
 }
 
-let myDeck = new Deck();
-
-console.log(myDeck.shuffle());
-console.log(myDeck.cards.length);
+// const card = Card.stringToCard("4S");
+// console.log(card);

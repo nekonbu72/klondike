@@ -1,16 +1,11 @@
-import {
-  Card,
-  Color,
-  Deck,
-  makeCloneCards,
-  Rank,
-  Suit,
-  Updown,
-} from "./card.ts";
+import { Card, Color, Rank, Suit, Updown } from "./card.ts";
 
 export class Pile {
+  static readonly NUMBEROFPILES = 7;
+
   cards: Card[];
   position: number;
+
   constructor(cards: Card[], position: number) {
     if (position < 1 || position > 7) {
       throw new Error("Position Range Error");
@@ -28,21 +23,15 @@ export class Pile {
   }
 
   clone() {
-    return new Pile(makeCloneCards(this.cards), this.position);
+    return new Pile(Card.cloneCards(this.cards), this.position);
+  }
+
+  static makePiles(cards: Card[]) {
+    const plies: Pile[] = [];
+    for (let i = 1; i <= this.NUMBEROFPILES; i++) {
+      const pile = new Pile(cards, i);
+      plies.push(pile);
+    }
+    return plies;
   }
 }
-
-export function makePiles(deck: Deck) {
-  const plies: Pile[] = [];
-  const NUMBEROFPILES = 7;
-  for (let i = 1; i <= NUMBEROFPILES; i++) {
-    const pile = new Pile(deck.cards, i);
-    plies.push(pile);
-  }
-  return plies;
-}
-
-const myDeck = new Deck();
-const myPiles = makePiles(myDeck);
-console.log(myPiles);
-console.log(myDeck.cards.length);

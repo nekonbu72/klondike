@@ -1,12 +1,4 @@
-import {
-  Card,
-  Color,
-  Deck,
-  makeCloneCards,
-  Rank,
-  Suit,
-  Updown,
-} from "./card.ts";
+import { Card, Color, Rank, Suit, Updown } from "./card.ts";
 
 export class Stock {
   static readonly MAXNUMBEROFCARDS = 52 - 1 - 2 - 3 - 4 - 5 - 6 - 7;
@@ -40,7 +32,7 @@ export class Stock {
   }
 
   clone() {
-    const cloneStock = new Stock(makeCloneCards(this.cards));
+    const cloneStock = new Stock(Card.cloneCards(this.cards));
     cloneStock.position = this.position;
     return cloneStock;
   }

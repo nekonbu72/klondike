@@ -1,12 +1,4 @@
-import {
-  Card,
-  Color,
-  Deck,
-  makeCloneCards,
-  Rank,
-  Suit,
-  Updown,
-} from "./card.ts";
+import { Card, Color, Rank, Suit, Updown } from "./card.ts";
 
 export class Foundation {
   cards: Card[];
@@ -17,18 +9,15 @@ export class Foundation {
 
   clone() {
     const cloneFoundation = new Foundation(this.suit);
-    cloneFoundation.cards = makeCloneCards(this.cards);
+    cloneFoundation.cards = Card.cloneCards(this.cards);
     return cloneFoundation;
   }
-}
 
-export function makeFoundations() {
-  const foundations: Foundation[] = [];
-  for (const suit of Object.values(Suit)) {
-    foundations.push(new Foundation(suit));
+  static makeFoundations() {
+    const foundations: Foundation[] = [];
+    for (const suit of Object.values(Suit)) {
+      foundations.push(new Foundation(suit));
+    }
+    return foundations;
   }
-  return foundations;
 }
-
-const myFoundations = makeFoundations();
-console.log(makeFoundations());
